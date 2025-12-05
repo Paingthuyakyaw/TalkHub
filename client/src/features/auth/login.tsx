@@ -1,6 +1,8 @@
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { FieldInfo } from "../../util/form-error-message";
+import { useLogin } from "../../store/server/auth/mutationt";
+import { useNavigate } from "@tanstack/react-router";
 
 const schema = z.object({
   email: z.string().email(),
@@ -10,6 +12,8 @@ const schema = z.object({
 });
 
 const LoginComponent = () => {
+  const login = useLogin();
+  const navigate = useNavigate();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -20,7 +24,8 @@ const LoginComponent = () => {
       onDynamic: schema,
     },
     onSubmit: ({ value }) => {
-      console.log(value);
+      login.mutate(value);
+      navigate({ to: "/" });
     },
   });
 
@@ -65,6 +70,7 @@ const LoginComponent = () => {
                         type="email"
                         className=" font-[500px] text-sm text-gray-700 w-full focus:outline-none border-2 pl-2 py-1 border-gray-400 rounded-md "
                         placeholder="Enter your email"
+                        autoComplete="email"
                       />
                       <FieldInfo field={field} />
                     </>
@@ -94,6 +100,7 @@ const LoginComponent = () => {
                         onBlur={field.handleBlur}
                         name={field.name}
                         placeholder="Enter your password"
+                        autoComplete="current-password"
                       />
                       <FieldInfo field={field} />
                     </>
@@ -109,6 +116,8 @@ const LoginComponent = () => {
               <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
                 children={([canSubmit, isSubmitting]) => {
+                  console.log(canSubmit);
+
                   return (
                     <>
                       <button
