@@ -17,7 +17,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     // prevent double connection
     if (get().socket) return;
 
-    const socket: Socket = io("http://localhost:3000", {
+    const socket: Socket = io(import.meta.env.VITE_BASE_URL, {
       query: { userId },
     });
 

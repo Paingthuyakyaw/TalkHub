@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import { fetchVerfiy } from "../api";
+import { useBoundStore } from "../store/client/use-store";
 
 export interface AuthStateProps {
   isAuth: boolean;
@@ -17,6 +18,9 @@ const AuthContext = createContext<AuthStateProps | undefined>(undefined);
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { setUser } = useBoundStore();
+
+  console.log({ isAuth, isLoading });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,10 +29,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       const fetchData = async () => {
         try {
           const data = await fetchVerfiy();
-          setIsAuth(data?.message == "success" || true);
+          setIsAuth(data?.message == "success");
           setIsLoading(false);
+          setUser(data?.data);
         } catch (err) {
           setIsLoading(false);
+          setIsAuth(false);
         } finally {
           setIsLoading(false);
         }
@@ -36,6 +42,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       fetchData();
     } else {
       setIsLoading(false);
+      setIsAuth(false);
     }
   }, []);
 

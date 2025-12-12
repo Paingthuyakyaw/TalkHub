@@ -116,8 +116,6 @@ const LoginComponent = () => {
               <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
                 children={([canSubmit, isSubmitting]) => {
-                  console.log(canSubmit);
-
                   return (
                     <>
                       <button
