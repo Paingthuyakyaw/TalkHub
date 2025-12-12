@@ -4,6 +4,7 @@ export interface userProps {
   email: string;
   id: string;
   avatar?: string;
+  username: string;
 }
 
 export interface UserSliceProps {
@@ -13,7 +14,7 @@ export interface UserSliceProps {
 
 export const createUserSlice: StateCreator<UserSliceProps> = (set) => {
   return {
-    user: { email: "", id: "", avatar: "" },
+    user: { email: "", id: "", avatar: "", username: "" },
     setUser: (data) => set((state) => ({ ...state, user: data })),
   };
 };

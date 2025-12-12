@@ -11,13 +11,13 @@ export const Route = createFileRoute("/(auth)/login")({
       throw redirect({ to: search.redirect });
     }
   },
-  component: RouteComponent,
+  component: LoginComponent,
 });
 
-function RouteComponent() {
-  return (
-    <div>
-      <LoginComponent />
-    </div>
-  );
-}
+// function RouteComponent() {
+//   return (
+//     <div>
+//       <LoginComponent />
+//     </div>
+//   );
+// }
