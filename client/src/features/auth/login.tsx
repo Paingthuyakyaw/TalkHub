@@ -1,8 +1,9 @@
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { FieldInfo } from "../../util/form-error-message";
+import { Route } from "../../routes/(auth)/login";
+import { router } from "../../main";
 import { useLogin } from "../../store/server/auth/mutationt";
-import { useNavigate } from "@tanstack/react-router";
 
 const schema = z.object({
   email: z.string().email(),
@@ -13,7 +14,8 @@ const schema = z.object({
 
 const LoginComponent = () => {
   const login = useLogin();
-  const navigate = useNavigate();
+  const navigate = Route.useNavigate();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -23,9 +25,18 @@ const LoginComponent = () => {
     validators: {
       onDynamic: schema,
     },
-    onSubmit: ({ value }) => {
-      login.mutate(value);
-      navigate({ to: "/" });
+    onSubmit: async ({ value }) => {
+      try {
+        login.mutate(value);
+
+        // setAuth(data.token);
+
+        await router.invalidate();
+
+        navigate({ to: "/users" });
+      } catch (err) {
+        console.error("Login failed:", err);
+      }
     },
   });
 

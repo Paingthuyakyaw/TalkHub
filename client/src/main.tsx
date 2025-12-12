@@ -4,18 +4,17 @@ import "./index.css";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthProvider, { useAuth } from "./provider/auth-provider.tsx";
 
 const query = new QueryClient();
 
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultPreloadStaleTime: 0,
   context: {
     queryClient: query,
-    auth: { isAuth: false, isLoading: true },
+    auth: undefined!,
   },
 });
 
@@ -29,16 +28,13 @@ declare module "@tanstack/react-router" {
 }
 
 function InnerApp() {
-  const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth }} />;
+  return <RouterProvider router={router} />;
 }
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={query}>
-      <AuthProvider>
-        <InnerApp />
-      </AuthProvider>
+      <InnerApp />
     </QueryClientProvider>
   </StrictMode>
 );

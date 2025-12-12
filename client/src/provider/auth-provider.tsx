@@ -20,8 +20,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { setUser } = useBoundStore();
 
-  console.log({ isAuth, isLoading });
-
   useEffect(() => {
     const token = localStorage.getItem("token");
 
