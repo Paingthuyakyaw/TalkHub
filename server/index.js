@@ -9,6 +9,7 @@ import { app, server } from "./socket/message.socket.js";
 import cors from "cors";
 
 dotenv.config();
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +32,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/message", verifyToken, messageRouter);
 app.use("/api", verifyToken, userRouter);
 connectDb();
-server.listen(process.env.PORT, () => {
+server.listen(port, () => {
   console.log("Localhost : 3K");
 });
