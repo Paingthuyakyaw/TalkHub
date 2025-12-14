@@ -18,8 +18,8 @@ const MainLayout = () => {
       <div className="  w-full ">
         <div className=" px-2 h-14 "></div>
 
-        <div className="  h-screen pt-5 pr-2  bg-gray-100 ">
-          <div className=" border border-white h-[90vh] rounded-md   bg-white ">
+        <div className="   h-screen pt-5 pr-2  bg-gray-100 ">
+          <div className=" relative border border-white h-[90vh] rounded-md   bg-white ">
             <Outlet />
           </div>
         </div>

@@ -17,7 +17,13 @@ export const Route = createFileRoute("/_authenticated")({
       const data = await fetchVerfiy(useBoundStore.getState().token);
       useBoundStore.getState().setUser(data.data);
     } catch (err) {
-      localStorage.removeItem("token");
+      useBoundStore.getState().removeAuth();
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
     }
   },
   component: RouteComponent,

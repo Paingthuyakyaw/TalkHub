@@ -3,14 +3,19 @@ import { messageQueryOptions } from "../../store/server/message/query";
 import { Route } from "../../routes/_authenticated/users/$userId";
 import { getUserByIdOptions } from "../../store/server/user/query";
 import { useSocketStore } from "../../store/client/socket";
-import { useBoundStore } from "../../store/client/use-store";
+import MessageData from "./components/message-data";
 
 const UserComponent = () => {
   const { userId } = Route.useParams();
   const { data: message } = useSuspenseQuery(messageQueryOptions(userId));
   const { data: user } = useSuspenseQuery(getUserByIdOptions(userId));
   const { onlineUsers } = useSocketStore();
-  const { user: u } = useBoundStore();
+
+  const mess = message.data.message?.map((item) => ({
+    senderId: item.senderId,
+    receiverId: item.receiverId,
+    message: item.message,
+  }));
 
   return (
     <div>
@@ -30,17 +35,7 @@ const UserComponent = () => {
         </div>
       </div>
       <div className=" p-2">
-        {message.data.message.map((item) => (
-          <div
-            className={` mt-2 flex ${
-              u.id == item.senderId ? "justify-end" : "justify-start"
-            }   `}
-          >
-            <span className=" bg-gray-100 text-sm  font-medium p-2 rounded-md ">
-              {item.message}
-            </span>
-          </div>
-        ))}
+        <MessageData message={mess} userId={userId} />
       </div>
     </div>
   );
