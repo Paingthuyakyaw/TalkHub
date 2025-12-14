@@ -23,7 +23,8 @@ export const useSocketStore = create<SocketState>((set, get) => ({
 
     // Listen online user list event
     socket.on("online", (users: string[]) => {
-      console.log({ users });
+      console.log(users);
+
       set({ onlineUsers: users });
     });
     set({ socket });

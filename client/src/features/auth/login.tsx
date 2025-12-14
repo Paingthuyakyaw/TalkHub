@@ -33,7 +33,7 @@ const LoginComponent = () => {
 
         await router.invalidate();
 
-        navigate({ to: "/users" });
+        navigate({ to: "/" });
       } catch (err) {
         console.error("Login failed:", err);
       }

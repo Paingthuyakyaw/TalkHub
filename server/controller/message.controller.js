@@ -57,11 +57,17 @@ export const getMessage = async (req, res) => {
     const { receiverId } = req.query;
     const senderId = req.user.id;
 
+    console.log(await ConversationSchema.find());
+
     const charts = await ConversationSchema.findOne({
-      participants: [senderId, receiverId],
+      participants: {
+        $all: [senderId, receiverId],
+      },
     })
       .populate("message", "message receiverId senderId ")
       .populate("participants", "username email");
+
+    console.log(charts);
 
     if (!charts) {
       return res.status(400).json({

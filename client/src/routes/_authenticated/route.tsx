@@ -5,8 +5,6 @@ import { fetchVerfiy } from "../../api";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ location }) => {
-    console.log(useBoundStore.getState().token, "authenticated");
-
     if (!useBoundStore.getState().token) {
       throw redirect({
         to: "/login",

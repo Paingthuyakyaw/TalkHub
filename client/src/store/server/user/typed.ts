@@ -10,3 +10,16 @@ export interface userResponseProps {
     updatedAt: string;
   }[];
 }
+
+export interface userResponseById {
+  message: string;
+  data: {
+    _id: string;
+    username: string;
+    email: string;
+    gender: string;
+    avatar: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
