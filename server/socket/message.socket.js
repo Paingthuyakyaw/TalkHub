@@ -7,8 +7,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:5173", "https://talk-hub-kzoa.vercel.app"],
+    credentials: true,
   },
+  transports: ["polling", "websocket"],
 });
 
 const userSocketMap = {};
