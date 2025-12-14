@@ -31,6 +31,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/message", verifyToken, messageRouter);
 app.use("/api", verifyToken, userRouter);
 connectDb();
-server.listen(3000, () => {
+server.listen(process.env.PORT, () => {
   console.log("Localhost : 3K");
 });
