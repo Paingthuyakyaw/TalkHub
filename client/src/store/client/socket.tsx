@@ -15,7 +15,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
 
   connectSocket: (userId: string) => {
     if (get().socket) return;
-    const socket: Socket = io(import.meta.env.VITE_BASE_URL, {
+    const socket: Socket = io(import.meta.env.VITE_SOCKET_URL, {
       query: { userId },
     });
 
