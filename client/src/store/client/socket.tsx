@@ -17,6 +17,8 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     if (get().socket) return;
     const socket: Socket = io(import.meta.env.VITE_SOCKET_URL, {
       query: { userId },
+      withCredentials: true,
+      transports: ["websocket", "polling"],
     });
 
     console.log("connect socket");
